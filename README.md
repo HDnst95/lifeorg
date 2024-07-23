@@ -45,4 +45,6 @@ Das Frontend wurde mit JavaFX erstellt und bietet eine Benutzeroberfläche zur A
 1. **Repository klonen:**
 
    ```sh
-   git cl
+   git clone https://github.com/deinbenutzername/lifeorg.git
+   cd lifeorg
+
