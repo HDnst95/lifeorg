@@ -6,20 +6,26 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="de.lifeorg.frontend.controller.ToDoListController">
     <top>
-        <HBox spacing="10" alignment="CENTER">
+        <HBox spacing="10" alignment="CENTER" style="-fx-background-color: #336699;">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <TextField fx:id="taskTitleField" promptText="Task Title"/>
-            <Button text="Add Task" onAction="#handleAddTask"/>
-            <Button text="Edit Task" onAction="#handleEditTask"/>
-            <Button text="Delete Task" onAction="#handleDeleteTask"/>
+            <TextField fx:id="taskTitleField" promptText="Task Title" style="-fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);"/>
+            <Button text="Add Task" onAction="#handleAddTask" style="-fx-background-color: #00cc00; -fx-text-fill: white;"/>
+            <Button text="Edit Task" onAction="#handleEditTask" style="-fx-background-color: #ffaa00; -fx-text-fill: white;"/>
+            <Button text="Delete Task" onAction="#handleDeleteTask" style="-fx-background-color: #cc0000; -fx-text-fill: white;"/>
         </HBox>
     </top>
     <center>
-        <ListView fx:id="taskListView" onMouseClicked="#handleTaskSelection"/>
+        <VBox spacing="10" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <ListView fx:id="taskListView" onMouseClicked="#handleTaskSelection" style="-fx-background-color: #e6f2ff;"/>
+        </VBox>
     </center>
 </BorderPane>

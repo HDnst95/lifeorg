@@ -1,6 +1,6 @@
 package de.lifeorg.backend.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,9 +16,7 @@ public class Task {
     private Long id;
     private String title;
     private String description;
-    private Date dueDate;
-    private String priority;
-    private String status;
+    private LocalDateTime dueDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -69,43 +67,15 @@ public class Task {
     /**
      * @return the dueDate
      */
-    public Date getDueDate() {
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
     /**
      * @param dueDate the dueDate to set
      */
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
-    }
-
-    /**
-     * @return the priority
-     */
-    public String getPriority() {
-        return priority;
-    }
-
-    /**
-     * @param priority the priority to set
-     */
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-
-    /**
-     * @return the status
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     /**

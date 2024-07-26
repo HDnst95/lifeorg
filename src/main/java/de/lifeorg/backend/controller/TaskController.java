@@ -3,7 +3,6 @@ package de.lifeorg.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.lifeorg.backend.exception.ResourceNotFoundException;
 import de.lifeorg.backend.model.Task;
+import de.lifeorg.backend.model.User;
 import de.lifeorg.backend.repository.TaskRepository;
+import de.lifeorg.backend.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -23,31 +23,32 @@ public class TaskController {
     @Autowired
     private TaskRepository taskRepository;
 
-    @GetMapping
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/{username}")
+    public List<Task> getTasksByUser(@PathVariable String username) {
+        User user = userRepository.findByUsername(username);
+        return taskRepository.findByUser(user);
     }
 
-    @PostMapping
-    public Task createTask(@RequestBody Task task) {
+    @PostMapping("/{username}")
+    public Task createTask(@PathVariable String username, @RequestBody Task task) {
+        User user = userRepository.findByUsername(username);
+        task.setUser(user);
         return taskRepository.save(task);
     }
 
-    @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task taskDetails) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task not found"));
-        task.setTitle(taskDetails.getTitle());
-        task.setDescription(taskDetails.getDescription());
-        task.setDueDate(taskDetails.getDueDate());
-        task.setPriority(taskDetails.getPriority());
-        task.setStatus(taskDetails.getStatus());
+    @PutMapping("/{username}/{id}")
+    public Task updateTask(@PathVariable String username, @PathVariable Long id, @RequestBody Task task) {
+        User user = userRepository.findByUsername(username);
+        task.setUser(user);
+        task.setId(id);
         return taskRepository.save(task);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task not found"));
-        taskRepository.delete(task);
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/{username}/{id}")
+    public void deleteTask(@PathVariable String username, @PathVariable Long id) {
+        taskRepository.deleteById(id);
     }
 }
