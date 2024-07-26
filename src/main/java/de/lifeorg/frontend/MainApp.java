@@ -25,9 +25,8 @@ public class MainApp extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/de/lifeorg/frontend/UserLogin.fxml"));
-            GridPane loginLayout = (GridPane) loader.load(); // Correctly casting to GridPane
+            GridPane loginLayout = (GridPane) loader.load();
 
-            // Set the main app reference into the controller
             UserLoginController controller = loader.getController();
             controller.setMainApp(this);
 
@@ -45,9 +44,12 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("/de/lifeorg/frontend/ToDoList.fxml"));
             BorderPane toDoListLayout = (BorderPane) loader.load();
 
-            // Set the username into the ToDoListController
             ToDoListController controller = loader.getController();
             controller.setCurrentUsername(username);
+
+            // Lade die PomodoroTimer.fxml und füge sie der ToDoList-Szene hinzu
+            BorderPane pomodoroPane = FXMLLoader.load(getClass().getResource("/de/lifeorg/frontend/PomodoroTimer.fxml"));
+            toDoListLayout.setRight(pomodoroPane);
 
             Scene scene = new Scene(toDoListLayout);
             primaryStage.setScene(scene);
