@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
 
     private Stage primaryStage;
+    private String currentUsername;
 
     @Override
     public void start(Stage primaryStage) {
@@ -39,13 +40,14 @@ public class MainApp extends Application {
     }
 
     public void showToDoListView(String username) {
+        this.currentUsername = username;
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/de/lifeorg/frontend/ToDoList.fxml"));
             BorderPane toDoListLayout = (BorderPane) loader.load();
 
             ToDoListController controller = loader.getController();
-            controller.setCurrentUsername(username);
+            controller.setMainApp(this);
 
             // Lade die PomodoroTimer.fxml und füge sie der ToDoList-Szene hinzu
             BorderPane pomodoroPane = FXMLLoader.load(getClass().getResource("/de/lifeorg/frontend/PomodoroTimer.fxml"));
@@ -57,6 +59,24 @@ public class MainApp extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void showStatisticsView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/de/lifeorg/frontend/StatisticsView.fxml"));
+            BorderPane statisticsLayout = (BorderPane) loader.load();
+
+            Scene scene = new Scene(statisticsLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getCurrentUsername() {
+        return currentUsername;
     }
 
     public static void main(String[] args) {

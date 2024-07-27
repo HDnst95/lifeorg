@@ -13,31 +13,47 @@ Das Backend wurde mit Spring Boot erstellt und bietet eine RESTful API für die 
 - **Modelle:**
   - `User`
   - `Task`
+  - `PomodoroSession`
 - **Repositories:**
   - `UserRepository`
   - `TaskRepository`
+  - `PomodoroSessionRepository`
 - **Controller:**
   - `TaskController`
+  - `UserController`
+  - `PomodoroController`
 - **Exception Handling:**
   - `ResourceNotFoundException`
 
 ### Frontend
 
-Das Frontend wurde mit JavaFX erstellt und bietet eine Benutzeroberfläche zur Anzeige und Verwaltung der To-Do-Liste.
+Das Frontend wurde mit JavaFX erstellt und bietet eine Benutzeroberfläche zur Anzeige und Verwaltung der To-Do-Liste sowie eines Pomodoro-Timers.
 
 - **Main Application Class:** `MainApp`
 - **Controller:**
   - `ToDoListController`
+  - `UserLoginController`
+  - `PomodoroTimerController`
 - **Service:**
   - `ApiService`
 - **FXML Layout:**
   - `ToDoList.fxml`
+  - `UserLogin.fxml`
+  - `PomodoroTimer.fxml`
+
+## Funktionen
+
+- **Benutzerregistrierung und -anmeldung**: Benutzer können sich registrieren und anmelden, um ihre Aufgaben zu verwalten.
+- **Aufgabenverwaltung**: Benutzer können Aufgaben erstellen, bearbeiten und löschen.
+- **Pomodoro-Timer**: Ein integrierter Pomodoro-Timer hilft Benutzern, ihre Arbeitszeit in produktive Intervalle zu unterteilen.
+- **Statistiken und Berichte**: Anzeige von Statistiken über erledigte Aufgaben und genutzte Pomodoro-Zyklen (zukünftige Funktion).
+- **Benachrichtigungen**: Erinnerungen und Benachrichtigungen für anstehende Aufgaben und Pausen (zukünftige Funktion).
 
 ## Installation
 
 ### Voraussetzungen
 
-- Java 11
+- Java 17 oder höher
 - Maven
 - Git
 
@@ -46,7 +62,7 @@ Das Frontend wurde mit JavaFX erstellt und bietet eine Benutzeroberfläche zur A
 1. **Repository klonen:**
 
    ```sh
-   git clone https://github.com/deinbenutzername/lifeorg.git
+   git clone https://github.com/HDnst95/lifeorg.git
    cd lifeorg
    ```
 
@@ -74,7 +90,7 @@ Das Frontend wurde mit JavaFX erstellt und bietet eine Benutzeroberfläche zur A
 
 ## Nutzung
 
-Nach dem Start der Anwendung wird ein Fenster angezeigt, das eine einfache To-Do-Liste enthält. Die Anwendung kommuniziert über eine RESTful API mit dem Backend, um Aufgaben zu erstellen, zu lesen, zu aktualisieren und zu löschen.
+Nach dem Start der Anwendung wird ein Fenster angezeigt, das eine einfache To-Do-Liste enthält. Die Anwendung kommuniziert über eine RESTful API mit dem Backend, um Aufgaben zu erstellen, zu lesen, zu aktualisieren und zu löschen. Außerdem steht ein Pomodoro-Timer zur Verfügung, um Arbeitsintervalle zu verwalten.
 
 ## Technologie-Stack
 

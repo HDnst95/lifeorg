@@ -1,7 +1,6 @@
 package de.lifeorg.backend.model;
 
 import java.time.LocalDateTime;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,81 +16,83 @@ public class Task {
     private String title;
     private String description;
     private LocalDateTime dueDate;
+    private boolean completed; // Hinzugefügtes Attribut
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    /**
-     * @return the id
-     */
+    public Task() {
+        // Default-Konstruktor
+    }
+
+    public Task(String title, boolean completed) {
+        this.title = title;
+        this.completed = completed;
+    }
+
+    /** @return the id */
     public Long getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
+    /** @param id the id to set */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * @return the title
-     */
+    /** @return the title */
     public String getTitle() {
         return title;
     }
 
-    /**
-     * @param title the title to set
-     */
+    /** @param title the title to set */
     public void setTitle(String title) {
         this.title = title;
     }
 
-    /**
-     * @return the description
-     */
+    /** @return the description */
     public String getDescription() {
         return description;
     }
 
-    /**
-     * @param description the description to set
-     */
+    /** @param description the description to set */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    /**
-     * @return the dueDate
-     */
+    /** @return the dueDate */
     public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    /**
-     * @param dueDate the dueDate to set
-     */
+    /** @param dueDate the dueDate to set */
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
 
-    /**
-     * @return the user
-     */
+    /** @return the user */
     public User getUser() {
         return user;
     }
 
-    /**
-     * @param user the user to set
-     */
+    /** @param user the user to set */
     public void setUser(User user) {
         this.user = user;
     }
 
-    // Getter und Setter
+    /** @return the completed status */
+    public boolean isCompleted() {
+        return completed;
+    }
 
+    /** @param completed the completed status to set */
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    @Override
+    public String toString() {
+        return title + (completed ? " (Completed)" : "");
+    }
 }

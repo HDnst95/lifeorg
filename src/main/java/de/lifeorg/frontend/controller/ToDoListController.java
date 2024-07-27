@@ -1,93 +1,132 @@
 package de.lifeorg.frontend.controller;
 
-import java.util.List;
-
-import de.lifeorg.backend.model.Task;
+import de.lifeorg.frontend.MainApp;
 import de.lifeorg.frontend.service.ApiService;
+import de.lifeorg.backend.model.Task;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+
+import java.util.List;
 
 public class ToDoListController {
 
     @FXML
-    private ListView<String> taskListView;
-
-    @FXML
     private TextField taskTitleField;
+    @FXML
+    private ListView<Task> taskListView;
+    @FXML
+    private TextField pomodoroTimerField;
 
-    private final ApiService apiService;
-    private String currentUsername;
+    private MainApp mainApp;
+    private ApiService apiService;
+    private ObservableList<Task> taskList;
 
     public ToDoListController() {
         this.apiService = new ApiService();
     }
 
-    public void setCurrentUsername(String username) {
-        this.currentUsername = username;
+    @FXML
+    private void initialize() {
+        taskList = FXCollections.observableArrayList();
+        taskListView.setItems(taskList);
+    }
+
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
         loadTasks();
     }
 
-    @FXML
-    public void initialize() {
-        // Tasks are loaded when username is set
-    }
-
     private void loadTasks() {
-        List<Task> tasks = apiService.getTasksByUser(currentUsername);
-        taskListView.getItems().clear();
-        for (Task task : tasks) {
-            taskListView.getItems().add(task.getTitle());
-        }
+        List<Task> tasks = apiService.getTasksByUser(mainApp.getCurrentUsername());
+        taskList.setAll(tasks);
     }
 
     @FXML
     private void handleAddTask() {
         String title = taskTitleField.getText();
-        if (title != null && !title.trim().isEmpty()) {
-            Task newTask = new Task();
-            newTask.setTitle(title);
-            apiService.createTask(currentUsername, newTask);
-            taskListView.getItems().add(title);
-            taskTitleField.clear();
+        if (title.isEmpty()) {
+            showAlert("Error", "Task title cannot be empty.");
+            return;
         }
+        Task newTask = new Task(title, false); // Verwenden des neuen Konstruktors
+        taskList.add(newTask);
+        apiService.createTask(mainApp.getCurrentUsername(), newTask);
+        taskTitleField.clear();
     }
 
     @FXML
     private void handleEditTask() {
-        String selectedTitle = taskListView.getSelectionModel().getSelectedItem();
-        if (selectedTitle != null) {
-            Task selectedTask = apiService.getTasksByUser(currentUsername).stream()
-                    .filter(task -> task.getTitle().equals(selectedTitle)).findFirst().orElse(null);
-            if (selectedTask != null) {
-                selectedTask.setTitle(taskTitleField.getText());
-                apiService.updateTask(currentUsername, selectedTask.getId(), selectedTask);
-                taskListView.getItems().set(taskListView.getSelectionModel().getSelectedIndex(),
-                        taskTitleField.getText());
-                taskTitleField.clear();
-            }
+        Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
+        if (selectedTask == null) {
+            showAlert("Error", "No task selected.");
+            return;
         }
+        String newTitle = taskTitleField.getText();
+        if (newTitle.isEmpty()) {
+            showAlert("Error", "Task title cannot be empty.");
+            return;
+        }
+        selectedTask.setTitle(newTitle);
+        apiService.updateTask(mainApp.getCurrentUsername(), selectedTask.getId(), selectedTask);
+        taskListView.refresh();
+        taskTitleField.clear();
     }
 
     @FXML
     private void handleDeleteTask() {
-        String selectedTitle = taskListView.getSelectionModel().getSelectedItem();
-        if (selectedTitle != null) {
-            Task selectedTask = apiService.getTasksByUser(currentUsername).stream()
-                    .filter(task -> task.getTitle().equals(selectedTitle)).findFirst().orElse(null);
-            if (selectedTask != null) {
-                apiService.deleteTask(currentUsername, selectedTask.getId());
-                taskListView.getItems().remove(selectedTitle);
-                taskTitleField.clear();
-            }
+        Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
+        if (selectedTask == null) {
+            showAlert("Error", "No task selected.");
+            return;
         }
+        taskList.remove(selectedTask);
+        apiService.deleteTask(mainApp.getCurrentUsername(), selectedTask.getId());
     }
 
     @FXML
-    private void handleTaskSelection() {
-        String selectedTitle = taskListView.getSelectionModel().getSelectedItem();
-        if (selectedTitle != null) {
-            taskTitleField.setText(selectedTitle);
+    private void handleCompleteTask() {
+        Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
+        if (selectedTask == null) {
+            showAlert("Error", "No task selected.");
+            return;
         }
+        selectedTask.setCompleted(true);
+        apiService.updateTask(mainApp.getCurrentUsername(), selectedTask.getId(), selectedTask);
+        taskListView.refresh();
+    }
+
+    @FXML
+    private void handleShowStatistics() {
+        mainApp.showStatisticsView();
+    }
+
+    // Pomodoro Timer Handlers
+    @FXML
+    private void handleStartPomodoro() {
+        // Logik zum Starten des Pomodoro-Timers
+    }
+
+    @FXML
+    private void handlePausePomodoro() {
+        // Logik zum Pausieren des Pomodoro-Timers
+    }
+
+    @FXML
+    private void handleResetPomodoro() {
+        // Logik zum Zurücksetzen des Pomodoro-Timers
+        pomodoroTimerField.setText("25:00"); // Beispiel für das Zurücksetzen des Timers auf 25:00
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

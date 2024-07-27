@@ -6,6 +6,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.util.Duration;
 
 public class PomodoroTimerController {
@@ -35,6 +37,7 @@ public class PomodoroTimerController {
             isRunning = true;
             timeline.play();
             currentSession = apiService.startPomodoroSession("username"); // Username muss dynamisch sein
+            showNotification("Pomodoro gestartet", "Die Pomodoro-Sitzung wurde gestartet.");
         }
     }
 
@@ -43,6 +46,7 @@ public class PomodoroTimerController {
         if (isRunning) {
             isRunning = false;
             timeline.pause();
+            showNotification("Pomodoro pausiert", "Die Pomodoro-Sitzung wurde pausiert.");
         }
     }
 
@@ -55,6 +59,7 @@ public class PomodoroTimerController {
         updateTimerLabel();
         if (currentSession != null) {
             apiService.endPomodoroSession(currentSession.getId());
+            showNotification("Pomodoro beendet", "Die Pomodoro-Sitzung wurde beendet.");
         }
     }
 
@@ -74,5 +79,13 @@ public class PomodoroTimerController {
 
     private void updateTimerLabel() {
         timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
+    }
+
+    private void showNotification(String title, String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

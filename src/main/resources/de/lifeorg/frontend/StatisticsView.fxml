@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="de.lifeorg.frontend.controller.StatisticsController">
+    <center>
+        <VBox spacing="10" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label text="Statistiken" style="-fx-font-size: 20px;"/>
+            <GridPane hgap="20" vgap="20" alignment="CENTER">
+                <VBox spacing="10" alignment="CENTER">
+                    <PieChart fx:id="tasksChart" title="Aufgabenübersicht" maxWidth="150" maxHeight="150"/>
+                    <Label fx:id="completedTasksLabel"/>
+                    <Label fx:id="pendingTasksLabel"/>
+                </VBox>
+                <VBox spacing="10" alignment="CENTER" GridPane.columnIndex="1">
+                    <PieChart fx:id="pomodoroChart" title="Pomodoro-Übersicht" maxWidth="150" maxHeight="150"/>
+                    <Label fx:id="completedPomodorosLabel"/>
+                    <Label fx:id="pendingPomodorosLabel"/>
+                </VBox>
+            </GridPane>
+        </VBox>
+    </center>
+</BorderPane>

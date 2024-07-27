@@ -32,7 +32,14 @@ public class ApiService {
     }
 
     public User loginUser(User user) {
-        return restTemplate.postForObject(BASE_URL + "/users/login", user, User.class);
+        try {
+            return restTemplate.postForObject(BASE_URL + "/users/login", user, User.class);
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode().value() == 401) {
+                throw new RuntimeException("Invalid username or password. Please try again.");
+            }
+            throw new RuntimeException("An error occurred during login. Please try again.");
+        }
     }
 
     // Task methods
