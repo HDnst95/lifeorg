@@ -1,119 +1,76 @@
 
-# LifeOrganization
+# LifeOrg
 
-LifeOrganization ist eine Java-Anwendung, die Menschen mit ADHS hilft, ihren Alltag zu organisieren. Diese Anwendung bietet Funktionen wie eine To-Do-Liste, Kalender und Gamification-Elemente, um die Produktivität und Organisation zu verbessern.
+LifeOrg is a personal organization application that helps users manage their tasks and improve productivity through various features like Pomodoro timer, task management, and statistics tracking.
 
-## Projektstruktur
+## Features
 
-### Backend
+### 1. User Authentication
+- Users can register and log in with a username and password.
+- Validation to ensure only registered users can access the system.
 
-Das Backend wurde mit Spring Boot erstellt und bietet eine RESTful API für die Verwaltung von Aufgaben und Benutzern.
+### 2. Task Management (CRUD)
+- Users can create, view, update, and delete tasks.
+- Tasks are displayed in an easily manageable list.
+- Tasks can be marked as completed.
 
-- **Main Application Class:** `LifeOrgBackendApplication`
-- **Modelle:**
-  - `User`
-  - `Task`
-  - `PomodoroSession`
-- **Repositories:**
-  - `UserRepository`
-  - `TaskRepository`
-  - `PomodoroSessionRepository`
-- **Controller:**
-  - `TaskController`
-  - `UserController`
-  - `PomodoroController`
-- **Exception Handling:**
-  - `ResourceNotFoundException`
+### 3. Pomodoro Timer
+- Integrated Pomodoro timer to help users work in productive intervals.
+- Start, pause, and reset functionalities for the Pomodoro timer.
 
-### Frontend
+### 4. Statistics and Reports
+- Display statistics and reports on completed tasks and Pomodoro sessions.
+- Interactive PieCharts with hover effects and tooltips showing the value of each segment.
 
-Das Frontend wurde mit JavaFX erstellt und bietet eine Benutzeroberfläche zur Anzeige und Verwaltung der To-Do-Liste sowie eines Pomodoro-Timers.
-
-- **Main Application Class:** `MainApp`
-- **Controller:**
-  - `ToDoListController`
-  - `UserLoginController`
-  - `PomodoroTimerController`
-- **Service:**
-  - `ApiService`
-- **FXML Layout:**
-  - `ToDoList.fxml`
-  - `UserLogin.fxml`
-  - `PomodoroTimer.fxml`
-
-## Funktionen
-
-- **Benutzerregistrierung und -anmeldung**: Benutzer können sich registrieren und anmelden, um ihre Aufgaben zu verwalten.
-- **Aufgabenverwaltung**: Benutzer können Aufgaben erstellen, bearbeiten und löschen.
-- **Pomodoro-Timer**: Ein integrierter Pomodoro-Timer hilft Benutzern, ihre Arbeitszeit in produktive Intervalle zu unterteilen.
-- **Statistiken und Berichte**: Anzeige von Statistiken über erledigte Aufgaben und genutzte Pomodoro-Zyklen (zukünftige Funktion).
-- **Benachrichtigungen**: Erinnerungen und Benachrichtigungen für anstehende Aufgaben und Pausen (zukünftige Funktion).
+### 5. Gamification (Future)
+- Reward systems, progress bars, or badges to motivate users.
 
 ## Installation
 
-### Voraussetzungen
-
-- Java 17 oder höher
-- Maven
-- Git
-
-### Schritte
-
-1. **Repository klonen:**
-
+1. Clone the repository:
    ```sh
    git clone https://github.com/HDnst95/lifeorg.git
+   ```
+2. Navigate to the project directory:
+   ```sh
    cd lifeorg
    ```
-
-2. **Maven-Abhängigkeiten installieren:**
-
+3. Build the project using Maven:
    ```sh
    mvn clean install
    ```
-
-3. **Backend-Anwendung starten:**
-
-   - Führe die `LifeOrgBackendApplication` Klasse aus:
-
+4. Run the application:
    ```sh
    mvn spring-boot:run
    ```
 
-4. **Frontend-Anwendung starten:**
+## Recent Updates
 
-   - Führe die `MainApp` Klasse aus:
+### Updated Pomodoro and Task Functionalities
+- Implemented Pomodoro Timer start, pause, and reset functionalities.
+- Added task completion feature allowing users to mark tasks as completed.
 
-   ```sh
-   mvn javafx:run
-   ```
+### Fixed Issues with User Authentication
+- Resolved issues related to user registration and login.
+- Handled Optional<User> correctly to avoid type mismatch errors.
 
-## Nutzung
+### Enhanced UI for Statistics and Task Completion
+- Added hover effects and tooltips to PieChart segments in the statistics view.
+- Improved layout and design for better user experience.
 
-Nach dem Start der Anwendung wird ein Fenster angezeigt, das eine einfache To-Do-Liste enthält. Die Anwendung kommuniziert über eine RESTful API mit dem Backend, um Aufgaben zu erstellen, zu lesen, zu aktualisieren und zu löschen. Außerdem steht ein Pomodoro-Timer zur Verfügung, um Arbeitsintervalle zu verwalten.
+### Other Improvements
+- Refactored code for better readability and maintenance.
+- Updated FXML files to fix layout and style issues.
 
-## Technologie-Stack
+## Contributing
 
-- **Backend:**
-  - Spring Boot
-  - Spring Data JPA
-  - H2 Datenbank
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -am 'Add new feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Create a new Pull Request.
 
-- **Frontend:**
-  - JavaFX
+## License
 
-## Weitere Schritte
-
-1. **Design verbessern:** Mach die Benutzeroberfläche optisch ansprechender und intuitiver.
-2. **Benutzerverwaltung:** Implementiere eine Benutzeranmeldung und -registrierung.
-3. **Kalenderfunktion:** Füge einen Kalender hinzu, um Aufgaben und Termine anzuzeigen.
-4. **Erinnerungen:** Implementiere Benachrichtigungen für bevorstehende Aufgaben und Termine.
-5. **Synchronisation:** Synchronisiere Daten mit externen Kalendern wie Google Calendar oder Outlook.
-
-## Mitwirkende
-
-- [Hendrik Dienst](https://github.com/HDnst95)
-
-## Lizenz
-
-Dieses Projekt ist lizenziert unter der MIT-Lizenz - siehe die [LICENSE](LICENSE) Datei für Details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
